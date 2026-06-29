@@ -1,17 +1,12 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
-# Human Action Recognition on HMDB51
-
 <div align="center">
+
+# Human Action Recognition on HMDB51
 
 <p><strong>A reproducible deep-learning study of spatio-temporal video classification: transfer learning, two-phase fine-tuning, and a detailed error analysis of why temporal actions are hard to recognize across 51 classes.</strong></p>
 
 <p>
   <img src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/TensorFlow-2.x-FF6F00?logo=tensorflow&logoColor=white" alt="TensorFlow">
+  <img src="https://img.shields.io/badge/TensorFlow-2.20.0-FF6F00?logo=tensorflow&logoColor=white" alt="TensorFlow">
   <img src="https://img.shields.io/badge/Keras-Deep%20Learning-D00000?logo=keras&logoColor=white" alt="Keras">
   <img src="https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white" alt="Jupyter">
   <img src="https://img.shields.io/badge/OpenCV-Video%20I%2FO-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV">
@@ -21,8 +16,8 @@ output:
 </p>
 
 <p>
-  <a href="https://github.com/linshenhao"><img src="https://img.shields.io/badge/GitHub-Shenhao%20Lin-181717?logo=github&logoColor=white" alt="GitHub"></a>
-  <a href="https://www.linkedin.com/in/linshenhao-49b127393"><img src="https://img.shields.io/badge/LinkedIn-Shenhao%20Lin-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <a href="https://github.com/linshenhao"><img src="https://img.shields.io/badge/GitHub-Stefano%20Lin-181717?logo=github&logoColor=white" alt="GitHub"></a>
+  <a href="https://www.linkedin.com/in/linshenhao-49b127393"><img src="https://img.shields.io/badge/LinkedIn-Stefano%20Lin-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
 </p>
 
 </div>
@@ -58,7 +53,7 @@ Two observations drive the rest of this study:
 - **Fine-tuning helps, but only in the right order.** Unfreezing the backbone *after* the head has converged lifts the test accuracy from **40.4%** to **43.5%**. Unfreezing it too early destroys the pretrained weights (see [Two-phase training](#two-phase-training-strategy)).
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/training_curves.png" alt="Training and validation loss/accuracy curves" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/training_curves.png" alt="Training and validation loss/accuracy curves" width="100%">
 </p>
 
 ## Why this problem is difficult
@@ -159,7 +154,7 @@ Beyond setting a seed, the project includes several robustness decisions worth h
 The errors are not random — they map cleanly onto the spatial/temporal split.
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/per_class_accuracy.png" alt="Per-class accuracy" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/per_class_accuracy.png" alt="Per-class accuracy" width="100%">
 </p>
 
 **Well-recognized classes** (`climb`, `shoot_bow`, `golf`, `kiss`, `dribble`, `pullup`, `ride_bike`) all share a **distinctive object or scene** (wall, bow, club, ball, bar, bicycle). MobileNetV2 comes from ImageNet and excels at objects and scenes: when an action is anchored to an object, a single frame is enough.
@@ -178,13 +173,13 @@ The most frequent confusions are logical consequences of this:
 | `eat → drink`, `talk → drink` | hand moving toward the mouth |
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/top_confusions.png" alt="Most frequent confusions" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/top_confusions.png" alt="Most frequent confusions" width="100%">
 </p>
 
 The full picture is captured by the confusion matrix below: a strong diagonal (correct predictions) with off-diagonal mass concentrated exactly on the visually-similar pairs above.
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/confusion_matrix_sorted.png" alt="Confusion matrix (51 classes)" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/confusion_matrix_sorted.png" alt="Confusion matrix (51 classes)" width="100%">
 </p>
 
 Three concrete causes in this setup: only **16 sampled frames** lose brief motions, limited resolution blurs fine movement, and ImageNet features are tuned for **static objects** rather than dynamics.
@@ -195,20 +190,20 @@ Three concrete causes in this setup: only **16 sampled frames** lose brief motio
 
 ```text
 hmdb51-action-recognition/
-├── scripts/                       # all Python code (flat, easy to import)
-│   ├── prepare_dataset.py         # official splits → train/val/test CSV manifests
-│   ├── video_io.py                # .avi → 16 normalized frames
-│   ├── data.py                    # tf.data pipeline (shuffle, augment, batch, prefetch)
-│   ├── models.py                  # mobilenet_gru and conv3d architectures
-│   ├── metrics.py                 # evaluation, confusion matrix, training curves
-│   ├── prepare_hmdb51_dataset.py  # dataset preparation script
-│   └── train_twophase.py          # two-phase training script
-├── dataset/                       # hmdb51/ videos · official splits · generated manifests/
-├── notebooks/                     # end-to-end notebook (orchestration)
-├── outputs/                       # curves, confusion matrices, per-class metrics
-├── assets/                        # diagrams used in the documentation
-├── SPIEGAZIONE_PROGETTO.md        # detailed didactic walkthrough (EN)
-└── README.md
+├──> scripts/                       # all Python code (flat, easy to import)
+│   ├──> prepare_dataset.py         # official splits → train/val/test CSV manifests
+│   ├──> video_io.py                # .avi → 16 normalized frames
+│   ├──> data.py                    # tf.data pipeline (shuffle, augment, batch, prefetch)
+│   ├──> models.py                  # mobilenet_gru and conv3d architectures
+│   ├──> metrics.py                 # evaluation, confusion matrix, training curves
+│   ├──> prepare_hmdb51_dataset.py  # dataset preparation script
+│   └──> train_twophase.py          # two-phase training script
+├──> dataset/                       # hmdb51/ videos · official splits · generated manifests/
+├──> notebooks/                     # end-to-end notebook (orchestration)
+├──> outputs/                       # curves, confusion matrices, per-class metrics
+├──> assets/                        # diagrams used in the documentation
+├──> PROJECT_EXPLANATION.md        # detailed didactic walkthrough
+└──> README.md
 ```
 
 The video dataset (~2 GB) and trained weight files (`*.keras`) are excluded from version control.
@@ -278,6 +273,6 @@ The model's bottleneck is **motion**. Natural extensions:
 
 <p><strong>Built as a reproducible deep-learning study of human action recognition on HMDB51.</strong></p>
 
-<p><a href="https://github.com/linshenhao/hmdb51-action-recognition">View the repository</a> · <a href="SPIEGAZIONE_PROGETTO.md">Read the detailed walkthrough</a></p>
+<p><a href="https://github.com/linshenhao/hmdb51-action-recognition">View the repository</a> · <a href="PROJECT_EXPLANATION.md">Read the detailed walkthrough</a></p>
 
 </div>
