@@ -1,0 +1,51 @@
+# =====================================================================
+#  .gitignore - HMDB51 action recognition
+#  Tiene fuori da git i file pesanti, rigenerabili o personali.
+#  Restano versionati: scripts/, notebooks/, README.md,
+#  SPIEGAZIONE_PROGETTO.md, assets/, dataset/manifests/ e outputs/ (grafici/csv).
+# =====================================================================
+
+# === Dataset (troppo grande / pubblico: NON va su GitHub) ===
+dataset/hmdb51/
+dataset/hmdb51_org
+dataset/testTrainMulti_7030_splits/
+*.avi
+*.mp4
+
+# === Pesi dei modelli addestrati (rigenerabili con il training) ===
+*.keras
+*.h5
+*.weights
+*.ckpt
+*.pb
+
+# === File pesanti / binari opzionali ===
+presentation.key
+presentation.pptx
+
+# === Documenti generati (RStudio/pandoc: si rigenerano dal .md) ===
+*.html
+*.tex
+*.pdf
+
+# === Ambienti virtuali Python ===
+.venv/
+venv/
+env/
+.env
+
+# === Cache Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# === Sistema / editor ===
+.DS_Store
+Thumbs.db
+.Rhistory
+.idea/
+.vscode/
+
+# === Log ===
+*.log

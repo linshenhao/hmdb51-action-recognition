@@ -1,0 +1,18 @@
+{
+  "counts": {
+    "official": {
+      "train": 3518,
+      "unused": 1659,
+      "test": 1511
+    },
+    "generated": {
+      "train": 3029,
+      "val": 489,
+      "test": 1511,
+      "unused": 1659
+    },
+    "classes": 51,
+    "missing_files": 78,
+    "total_existing_in_split_files": 6688
+  }
+}

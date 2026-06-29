@@ -1,0 +1,19 @@
+{
+  "split_id": 1,
+  "val_ratio": 0.15,
+  "seed": 42,
+  "model_name": "mobilenet_gru",
+  "weights": "imagenet",
+  "dropout": 0.5,
+  "label_smoothing": 0.1,
+  "frames": 16,
+  "image_size": 160,
+  "batch_size": 8,
+  "epochs_head": 20,
+  "lr_head": 0.001,
+  "do_finetune": true,
+  "epochs_finetune": 15,
+  "lr_finetune": 3e-05,
+  "finetune_from_block": "block_11",
+  "quick_limit_per_class": null
+}
