@@ -35,9 +35,11 @@ def read_manifest(manifest_path, limit_per_class=None, seed=42):
 
 
 def _augment_video(video, label):
-    # Tutte le trasformazioni sono applicate in modo COERENTE su tutti i frame del
-    # clip (un solo fattore casuale per clip), cosi' non si rompe la coerenza
-    # temporale. Augmentation piu' forte = meno overfitting.
+    """
+    Tutte le trasformazioni sono applicate in modo COERENTE su tutti i frame del
+    clip (un solo fattore casuale per clip), cosi' non si rompe la coerenza
+    temporale. Augmentation piu' forte = meno overfitting.
+    """
     if tf.random.uniform(()) < 0.5:
         video = tf.reverse(video, axis=[2])            # flip orizzontale
     video = tf.image.random_brightness(video, max_delta=0.12)
