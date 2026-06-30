@@ -1,9 +1,5 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
-# HMDB51 – Complete project explanation (from scratch)
+
+# HMDB51 – Complete project explanation
 
 > Goal of this document: understand **what** the project does, **why** it is structured this way,
 > and **how** every piece of code works, truly starting from zero, taking nothing for granted.
@@ -74,24 +70,24 @@ There is also a simpler alternative model, `conv3d`, discussed later.
 
 ```
 HMDB project/
-├── dataset/                     # everything about the data, in one place
-│   ├── hmdb51/                  # the .avi videos, one folder per class
-│   ├── testTrainMulti_7030_splits/  # official files saying which videos are train/test
-│   └── manifests/              # generated CSVs: video lists for train/val/test
-├── outputs/                     # training results (models, plots, metrics)
-├── scripts/                     # all Python code (flat, easy to import)
-│   ├── prepare_dataset.py       # 1) builds the train/val/test lists
-│   ├── video_io.py              # 2) reads a video and turns it into numbers
-│   ├── data.py                  # 3) creates the "pipeline" of data for TensorFlow
-│   ├── models.py                # 4) defines the models (conv3d, mobilenet_gru)
-│   ├── metrics.py               # 5) evaluates the model and makes the plots
-│   ├── prepare_hmdb51_dataset.py   # standalone dataset preparer (CLI)
-│   └── train_twophase.py            # standalone two-phase training script
-├── notebooks/
-│   └── HMDB51_TensorFlow_Classifier.ipynb   # the notebook that uses everything else
-├── assets/architecture.png      # diagram used in this document
-├── README.md
-└── SPIEGAZIONE_PROGETTO.md
+├──> dataset/                                 # everything about the data, in one place
+│   ├──> hmdb51/                              # the .avi videos, one folder per class
+│   ├──> testTrainMulti_7030_splits/          # official files saying which videos are train/test
+│   └──> manifests/                           # generated CSVs: video lists for train/val/test
+├──> outputs/                                 # training results (models, plots, metrics)
+├──> scripts/                                 # all Python code (flat, easy to import)
+│   ├──> prepare_dataset.py                   # 1) builds the train/val/test lists
+│   ├──> video_io.py                          # 2) reads a video and turns it into numbers
+│   ├──> data.py                              # 3) creates the "pipeline" of data for TensorFlow
+│   ├──> models.py                            # 4) defines the models (conv3d, mobilenet_gru)
+│   ├──> metrics.py                           # 5) evaluates the model and makes the plots
+│   ├──> prepare_hmdb51_dataset.py            # standalone dataset preparer (CLI)
+│   └──> train_twophase.py                    # standalone two-phase training script
+├──> notebooks/
+│   └──>HMDB51_TensorFlow_Classifier.ipynb    # the notebook that uses everything else
+├──> assets/architecture.png                  # diagram used in this document
+├──> README.md
+└──> PROJECT_EXPLANATION.md
 ```
 
 The idea of putting all the code in `scripts/` (instead of one giant notebook) is the **separation of concerns**:
@@ -294,7 +290,7 @@ The plot below shows the full run: **Phase A** (frozen backbone) on the left, th
 validation settles around ~0.42 — the gap is the normal generalization gap, not a bug.
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/training_curves.png" alt="Two-phase training: loss and accuracy curves (train vs validation)" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/training_curves.png" alt="Two-phase training: loss and accuracy curves (train vs validation)" width="100%">
 </p>
 
 ### Important training details
@@ -355,7 +351,7 @@ Some classes are excellent (recall ≈ 0.9), others fail completely (recall 0.0)
 classes by accuracy: the easy ones at the top, the hard ones at the bottom.
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/per_class_accuracy.png" alt="Per-class accuracy, sorted from best to worst" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/per_class_accuracy.png" alt="Per-class accuracy, sorted from best to worst" width="100%">
 </p>
 
 **Well-recognized classes 👍** — `pullup` (0.93), `golf` (0.90), `shoot_bow` (0.90), `situp` (0.90),
@@ -371,7 +367,7 @@ motion**, not by an object. In a single frame they are ambiguous.
 ### The most frequent confusions and why they are logical
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/top_confusions.png" alt="Most frequent true to predicted confusions" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/top_confusions.png" alt="Most frequent true to predicted confusions" width="100%">
 </p>
 
 | Error (true → predicted) | Why it makes sense |
@@ -388,7 +384,7 @@ The full picture is in the confusion matrix: a strong diagonal (correct predicti
 mass concentrated exactly on the visually-similar pairs above.
 
 <p align="center">
-  <img src="outputs/20260628-135933_split1_mobilenet_gru_twophase/test_eval/confusion_matrix_sorted.png" alt="Confusion matrix over the 51 classes" width="100%">
+  <img src="outputs/20260629-133345_split1_mobilenet_gru_twophase/test_eval/confusion_matrix_sorted.png" alt="Confusion matrix over the 51 classes" width="100%">
 </p>
 
 Three concrete causes in this setup:
